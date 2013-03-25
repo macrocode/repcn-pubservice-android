@@ -1,0 +1,217 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="UTF-8">
+<title>
+	UNTV RADIO LA VERDAD 1350 kHz - Program Schedules
+</title>
+<!-- Default CSS of jQuery Mobile - Starts -->
+<link href="jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css"/>
+<link href="jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
+<!-- Default CSS of jQuery Mobile Ends -->
+
+<!-- Other css files -->
+<link rel="stylesheet" href="css/jqm-docs.css" />
+<link rel="stylesheet" href="css/untv-mobile.css" />
+
+<!-- Default JS of jQuery Mobile - Starts -->
+<script src="jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery.mobile-1.0.min.js" type="text/javascript"></script>
+<!-- Default JS of jQuery Mobile - Ends -->
+
+<!-- Other js files -->
+<script src="js/jqm-docs.js" type="text/javascript"></script>
+
+    <!-- PhoneGap JS -->
+    <script type="text/javascript" src="cordova-2.5.0.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+</head>
+<body id="untv-radio" onload="onLoad()">
+<div id="wrapper" data-role="page" class="type-home">
+
+<div id="header" data-position="fixed" data-role="header" data-theme="a">
+    	<a href="untv-home.html" data-role="button" data-theme="b" data-icon="back" class="ui-btn-left" data-rel="back" >
+        	Back
+        </a>
+        <h1 id="header-logo">
+        	<center>
+				<img src="images/untv/logo-untv-radio.png" alt="UNTV - Your Public Service Channel" id="logo-untv" />
+            </center>
+        </h1>
+    	<a href="index.html" data-role="button" data-theme="b" data-icon="home" class="ui-btn-right" data-ajax="false">
+        	Home
+        </a>
+	</div><!-- /header -->
+    
+	<div id="content" data-role="content">
+
+		<div id="program-category" class="content-secondary">
+          <h3 class="title">
+            	Program Schedules
+            </h3>
+		<div id="program-schedules-nav" data-role="collapsible" data-collapsed="true" data-theme="b" >
+            <h3 class="title">
+            	Days
+            </h3>
+            
+			<ul id="home-list" data-role="listview">
+				<li>
+                    <a href="#" onClick="loadschedule('Monday');" data-ajax="false">
+                    	Monday
+                    </a>
+                </li>
+				<li>
+                    <a href="#" onClick="loadschedule('Tuesday');" data-ajax="false">
+                    	Tuesday
+                    </a>
+                </li>
+				<li>
+                    <a href="#" onClick="loadschedule('Wednesday');" data-ajax="false">
+                    	Wednesday
+                    </a>
+                </li>
+				<li>
+                    <a href="#" onClick="loadschedule('Thursday');" data-ajax="false">
+                    	Thursday 
+                    </a>
+                </li>
+				<li>
+                    <a href="#" onClick="loadschedule('Friday');" data-ajax="false">
+                    	Friday
+                    </a>
+                </li>
+				<li>
+                    <a href="#" onClick="loadschedule('Saturday');" data-ajax="false">
+                    	Saturday
+                    </a>
+                </li>
+				<li>
+                    <a href="#" onClick="loadschedule('Sunday');" data-ajax="false">
+                    	Sunday
+                    </a>
+                </li>
+			</ul>
+        </div>
+		</div> <!--/content-secondary -->
+
+		<div class="content-primary">
+            <h3 id="program-title" class="title">
+            	Monday: Program Schedules
+            </h3>
+        
+                   <ul id="programs" data-role="listview" style="margin: 15px 5px 15px 5px;">
+                
+			
+		    </ul>
+        
+        
+		</div> <!-- END .content-primary -->
+	</div> <!-- END #content -->
+	<div data-role="footer" data-position="fixed">
+		
+        <div id="footer-menu" data-role="navbar" data-iconpos="top" data-theme="a">
+            <ul>
+                <li>
+                    <a href="#" onclick="getstreamdata();" id="icon-radio-webcast" data-icon="custom" data-ajax="false">
+                    	Webcast
+                    </a>
+                </li>
+                <li>
+                	<a href="untv-radio-twitter.html" id="icon-twitter" data-icon="custom" data-ajax="false">
+                		Twitter
+                    </a>
+                </li>
+                <li>
+                    <a href="untv-radio-contact.html" id="icon-contact" data-icon="custom" data-ajax="false">
+                    	Contact
+                    </a>
+                </li>
+            </ul>
+        </div><!-- /navbar -->
+    
+	</div><!-- /footer -->
+</div>
+<script type="text/javascript">
+    var isoffline = 0;
+function onLoad() {
+
+       document.addEventListener("online", onOnline, false);
+       document.addEventListener("deviceready", onDeviceReady, false);
+	 // loadschedule("Monday");
+
+    }
+
+    // Cordova is loaded and it is now safe to make calls Cordova methods
+    //
+    function onDeviceReady() {
+		document.addEventListener("offline", onOffline, false);
+    }
+
+    function loadschedule(schedule)
+	{
+        if (isoffline == 0)
+        {
+                        
+            $('#programs').empty();
+            
+            $("#program-title").text(schedule + " Program Schedule");
+            var url = "http://www.untvradio.com/api/programs/get_programs_by_day/?day=" + schedule + "&callback=?";
+            
+            $.getJSON(url).done(function (response) {
+                                //console.log(response.categories);
+                                //var posts = response.posts; //here's your response
+                                var r = response.programs;
+                                $('#programs').append("<li data-role='list-divider'>Programs</li>");
+                                var li = "", list = [];
+                                $.each(r[0], function (index, rObj) {
+                                       //console.log(rObj + "--data--");
+                                       //li = "";
+                                       li += "<li>";
+                                       li += "<a href='#'><img src='" + rObj.thumbnail + "' /><h4 class='program-title'>&nbsp;&nbsp;&nbsp;" + rObj.title + "</h4>";
+                                       li += "<p class='ui-li-aside'><strong>" + rObj.time_start +  " - " + rObj.time_end + "</strong></p></a></li>";
+                                       //list[index] = li;
+                                       });
+                                //$('#programs').append(list.join(''));
+                                $('#programs').append(li);
+                                $("#programs").listview("refresh");
+                                
+                                //hide the page loader
+                                $.mobile.hidePageLoadingMsg();
+                                });
+            
+            //cue the page loader
+			$.mobile.showPageLoadingMsg();
+        }
+        else {
+            navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
+        }
+        
+		 				
+	}
+    // Handle the online event
+    //
+    function onOnline() {
+        isoffline = 0;
+	   loadschedule("Monday");
+	}
+	
+	// Handle the offline event
+    //
+    function onOffline() {
+        isoffline = 1;
+	   
+	}
+    function getstreamdata() {
+        if (isoffline == 0)
+        {
+            getStreaming('untv-radio');
+        }
+        else {
+            navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
+        }
+    }
+
+</script>
+</body>
+</html>

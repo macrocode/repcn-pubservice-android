@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<link href="jquery-mobile/jquery.mobile-1.0.min.css" rel="stylesheet" type="text/css" />
+<script src="jquery-mobile/jquery-1.6.4.min.js" type="text/javascript"></script>
+<script src="jquery-mobile/jquery.mobile-1.0.min.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+<script type="text/javascript">
+
+function getfile(strimageurl)
+	{
+		             var fileNameIndex = strimageurl.lastIndexOf("/") + 1;
+                     var filename = strimageurl.substr(fileNameIndex);
+                     window.requestFileSystem(
+                     LocalFileSystem.PERSISTENT, 0, 
+                     function onFileSystemSuccess(fileSystem) {
+                     fileSystem.root.getFile(
+                                 "dummy.html", {create: true, exclusive: false}, 
+                                 function gotFileEntry(fileEntry){
+                                 var sPath = fileEntry.fullPath.replace("dummy.html","");
+								 var fileTransfer = new FileTransfer();
+                                 fileEntry.remove();
+ 
+                                 fileTransfer.download(
+                                           strimageurl,
+                                           sPath + filename,
+                                           function(theFile) {
+                                           alert("download complete: " + theFile.toURI());
+                                           showLink(theFile.toURI());
+										   vid1(theFile.toURI());
+										   showLinkvideo(theFile.toURI());
+                                           },
+                                           function(error) {
+                                           console.log("download error source " + error.source);
+                                           console.log("download error target " + error.target);
+                                           console.log("upload error code: " + error.code);
+                                           }
+                                           );
+                                 }, 
+                                 fail);
+                     }, 
+                     fail);
+    }
+	
+	 function showLink(url){
+        var divEl = document.getElementById("ready");
+        var aElem = document.createElement("a");
+        aElem.setAttribute("target", "_blank");
+        aElem.setAttribute("href", url);
+        aElem.appendChild(document.createTextNode("Ready! Click To Open."))
+        divEl.appendChild(aElem);
+ 
+    }
+	
+	function vid1(url){
+		var player = '<video width="320" height="240" controls>';
+        player =  player + '<source src="' + url + '" type="video/mp4">';
+        player =  player + 'Your browser does not support the video tag.';
+        player =  player + '</video>';
+		document.getElementById('vid1').innerHTML= player;
+	}
+	
+	function showLinkvideo(url){
+        var divEl = document.getElementById("vid2");
+        var aElem = document.createElement("a");
+        aElem.setAttribute("target", "_blank");
+        aElem.setAttribute("href", url);
+        aElem.appendChild(document.createTextNode("Ready! Click To Open."))
+        divEl.appendChild(aElem);
+ 
+    }
+	
+	function fail(evt) {
+        console.log(evt.target.error.code);
+    }
+	function onDeviceReady()
+     {
+           // do your thing!
+           
+     }
+</script>
+</head>
+
+<body>
+<div data-role="page" id="page">
+  <div data-role="header">
+    <h1>Video Tester</h1>
+  </div>
+  <div data-role="content">
+  <table>
+   <tr><td>1. Download Video <button id="button1" onClick="getfile('http://www.untvweb.com/news/wp-content/uploads/2013/02/IMAGE_FEB272013_UNTV-News_GRADUATION-150x150.jpg');">Download</button>&nbsp;<span id="ready"></span></td> </tr>
+   <tr><td>2. Play Video Online (With Video Player inside App)<br />
+   <video width="320" height="240" controls>
+       <source src="http://media.mcgi.me/ADDTV/T0104.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+   </video>
+   </td></tr>
+   <tr><td>3. Play Video Online (Link Only) >  <a href="http://media.mcgi.me/ADDTV/T0104.mp4">Play Link</a></td></tr>
+   <tr><td>4. Play Video Offline (With Video Player inside App)  <br />
+   <div id="vid1">
+      
+   </div>
+   </td></tr>
+   <tr><td>5. Play Video Offline (Link Only)<br />
+   <span id="vid2">
+   </span>
+   </td></tr>
+   
+</table>
+  </div>
+  <div data-role="footer">
+    <h4>Footer</h4>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+/* 
+========================================================
+
+    Owner: UNTV
+    URL: http://www.untvweb.com
+    Date: February 13, 2013
+
+========================================================
+*/
+body#untv {
+	background: url('../images/untv/bg-untv-home.jpg');
+	background-repeat: repeat;
+	background-color: #003f67;
+}
+body#untv-radio {
+	background: url('../images/untv/bg-untv-radio-home.jpg');
+	background-repeat: repeat;
+	background-color: #003f67;
+}
+body #wrapper {
+	background-color: transparent !important;
+	background: none !important;
+}
+body#homepage #wrapper {
+	color: #79e5ff;
+	letter-spacing: 1px;
+	text-shadow: 1px 1px #003444;
+}
+#untv-logo {
+	margin-bottom: 0;
+}
+#home-divider {
+	margin: 5px auto 15px;
+	background: url('../images/untv/border-intro.png');
+	height: 1px;
+	width:100%;
+}
+body.save div#content {
+    padding: 15px;
+}
+/* UNTV Listing - Starts */
+#home-list li {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fefefe), to(#81aeff)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(#fefefe, #81aeff); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient(#fefefe, #81aeff); /* FF3.6 */
+    background-image:     -ms-linear-gradient(#fefefe, #81aeff); /* IE10 */
+    background-image:      -o-linear-gradient(#fefefe, #81aeff); /* Opera 11.10+ */
+    background-image:         linear-gradient(#fefefe, #81aeff);	
+/*  background: url('../images/untv/bg-home-list.jpg');
+    background-repeat: repeat-x;*/
+    height: 45px;
+    padding-top: 5px;
+    margin-bottom: 10px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow:  1px 1px 1px 1px #333;
+    box-shadow:  1px 1px 1px 1px #333;
+}
+#home-list li:last-child {
+	border-bottom: none !important;
+}
+#home-list li div {
+	border: none !important;
+}
+#home-list li:hover, #home-list li:active {
+	background-image: none;
+	background-color: #fafcff;
+}
+#home-list li a {
+	color: #1f1f1f;
+	text-shadow: none !important;
+}
+/* UNTV Listing - Ends */
+
+/* UNTV Radio Listing - Starts */
+#radio-home-list li {
+	background: url('../images/untv/bg-home-list.jpg');
+	background-repeat: repeat-x;
+	height: 45px;
+	padding-top: 5px;
+	margin-bottom: 10px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow:  1px 1px 5px 1px #696969;
+    box-shadow:  1px 1px 5px 1px #696969;
+}
+#radio-home-list li:last-child {
+	border-bottom: none !important;
+}
+#radio-home-list li div {
+	border: none !important;
+}
+#radio-home-list li:hover, #home-list li:active {
+	background-image: none;
+	background-color: #fafcff;
+}
+#radio-home-list li a {
+	color: #1f1f1f;
+	text-shadow: none !important;
+}
+/* UNTV Radio Listing - Ends */
+
+#header a.ui-btn-left, 
+#header a.ui-btn-right {
+	margin-top: 20px;
+}
+#header-logo img {
+	width: 120px !important;
+	margin-top: 4px;
+} 
+#untv-radio #header-logo img {
+	width: 180px !important;
+} 
+/* UNTV Player - Starts */
+#untv-player, #untvradio-player {
+    position: relative;
+}
+#untv-streaming-status {
+    position: relative;
+    height: 30px;
+    text-align: center;
+    width: 320px;
+    margin: 0 auto;
+}
+@media all and (max-width:320px) {
+    #untv-player,
+    #untv-streaming-status, 
+    #untvradio-player, 
+    #untvradio-streaming-status {
+        left: -15px;
+    }
+    #iphone-mode {
+        margin-top: -42px;
+    }
+    #category-title-here {
+        display: none;
+    }
+    #news-category #home-list {
+        padding: 0 10px;
+    }
+    #iphone-category {
+        margin-top: 40px !important;
+        margin-bottom: 10px !important;
+    }
+    #iphone-newslist {
+        margin-top: 20px;
+    }
+    #programs h4.program-title {
+        position: relative; 
+        bottom: 30px;
+        left: 5px;
+        font-size: 12px;
+    }
+    #programs p.ui-li-aside {
+        float: none;
+        clear: both;
+        position: relative; 
+        top: 10px; 
+        width: 150px; 
+        margin-left: -18px;
+    }
+}
+#untv-loader {
+    width: 160px;
+    height: 30px;
+    position: absolute;
+    top: -14px;
+    left: 80px;
+    z-index: 1;
+}
+#untv-status {
+    position: absolute;
+    top: -14px;
+    left: 0;
+    z-index: 3;
+    background-color: #015183;
+    width: 320px;
+    padding: 0;
+    font-family: arial, verdana, tahoma;
+    font-size: 14px;
+    vertical-align: middle;
+    line-height: 30px;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000000;
+    filter: dropshadow(color=#000000, offx=1, offy=1);
+}
+/* UNTV Player - Ends*/
+
+/* UNTV Radio Player - Start */
+#untvradio-streaming-status {
+    position: relative;
+    height: 30px;
+    text-align: center;
+    width: 320px;
+    margin: 0 auto;
+}
+#radio-wallpaper {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+#radio-player-wrapper {
+    position: relative;
+    z-index: 4;
+}
+#untvradio-loader {
+    width: 160px;
+    height: 30px;
+    position: absolute;
+    left: 80px;
+	top: -14px;
+    z-index: 1;
+}
+#untvradio-status {
+    position: absolute;
+    top: -14px;
+    left: 0;
+    z-index: 3;
+    /* background-color: #015183; */
+    background-color: #7c0000;
+    width: 320px;
+    padding: 0;
+    font-family: arial, verdana, tahoma;
+    font-size: 14px;
+    vertical-align: middle;
+    line-height: 30px;
+    color: #fff;
+    text-shadow: 1px 1px 2px #000000;
+    filter: dropshadow(color=#000000, offx=1, offy=1);
+}
+body#untv #content h2#untv-webcast-text,
+body#untv-radio #content h2#untv-webcast-text {
+    text-shadow: 1px 1px 2px #000000 !important;
+    filter: dropshadow(color=#000000, offx=1, offy=1) !important;	
+}
+/* UNTV Radio Player - Ends*/
+#content h2.title {
+	color: #fff;
+	text-shadow: none !important;
+	font-weight: normal;
+	margin: 0;
+	padding: 10px 0 40px;
+	text-align: left;
+}
+#content h3.title {
+	color: #fff;
+	text-shadow: none !important;
+	font-weight: normal;
+	margin: 0 0 16px;
+	text-align: left;
+}
+#content h3#news-title {
+	padding-bottom: 14px;
+}
+#content h3#program-title {
+	padding-bottom: 0;
+}
+#content h2#untv-webcast-text {
+	padding-bottom: 20px;
+	text-align: center;
+}
+#newsroom {
+	padding: 0 16px;
+}
+#newsroom li {
+	padding: 10px;
+}
+#newsroom li:last-child {
+	padding-bottom: 22px !important;
+}
+#newsroom li div.ui-btn-inner {
+	border-top: none;
+}
+#news-category, #program-category {
+	margin-top: 10px;
+}
+#news-category div.ui-bar {
+	text-align: center;
+	border: 0 !important;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+#news-category-page div.ui-bar .ui-btn-inner {
+	min-height: 300px;
+}
+#news-category div.ui-bar a.news-link {
+	display: block;
+}
+#news-category div.ui-bar span.news-title {
+	margin: 10px 0 4px;
+	display: block;	
+	font-size: 16px;
+	font-weight: normal;
+	white-space: normal !important;
+}
+#news-category div.ui-bar a.ui-btn {
+	border-radius: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+}
+#news-category div.ui-bar img {
+	display: block;
+	margin: 0 auto;
+}
+#news-category span.category-page {
+	text-align: center;
+	margin: 10px 0;
+	display: block;
+}
+#news-category h3.title {
+	text-align: center;
+}
+#news-category-page {
+	margin-top: 10px;
+}
+#news-category-page div.ui-bar {
+	text-align: center;
+	border: 0 !important;
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+#news-category-page div.ui-bar .ui-btn-inner {
+	min-height: 350px;
+}
+#news-category-page div.ui-bar a.news-link {
+	display: block;
+}
+#news-category-page div.ui-bar span.news-title {
+	margin: 10px 0 4px;
+	display: block;	
+	font-size: 16px;
+	font-weight: normal;
+	white-space: normal !important;
+}
+#news-category-page div.ui-bar a.ui-btn {
+	border-radius: 0;
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+}
+#news-category-page div.ui-bar img {
+	display: block;
+	margin: 0 auto;
+}
+#news-category-page h3.title {
+	text-align: center;
+}
+#news-list-category {
+	padding: 0 15px;
+}
+#news-entry {
+	background-color: #fff;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border: solid 1px #ddd;
+	padding: 10px;
+	max-width: 720px;
+	margin: 0 auto;
+}
+#news-entry-header {
+	padding-bottom: 10px;
+	border-bottom: solid 1px #ddd;
+}
+#news-entry-header h2 {
+	margin-bottom: 10px;
+}
+#news-entry-header p {
+	margin-bottom: 0;
+	font-style: italic;
+}
+#programs div.ui-bar {
+	min-height: 280px;
+	padding: 15px;
+}
+#programs div.ui-bar div.thumbs {
+	margin-bottom: 10px;	
+	text-align: center;
+}
+#programs div.ui-bar h5 {
+	text-align: center;
+	display: block;
+}
+#programs div.ui-bar p.time {
+	font-size: 12px;
+	text-align:center;
+}
+#programs span.ui-icon {
+    display: none;
+}
+#contact-us td.title {
+	padding-right: 10px;
+	font-weight: bold;
+}
+#contact-us td {
+	padding-top: 20px;
+}
+#program-schedules-nav {
+	padding: 0;
+}
+#program-schedules-nav div.ui-collapsible-content, 
+#program-schedules-nav h3.title {
+	margin: 0;
+}
+#program-schedules-nav h3.title {
+	margin-bottom: 16px;
+}
+ul.untv-listing {
+    margin-left: 30px;
+}
+ul.untv-listing li {
+    list-style: disc !important;
+    list-style-position: outside;
+    
+}
+ul.untv-listing li:last-child {
+    border-bottom: none !important;
+}
+/* Footer Menu */
+	#footer-menu .ui-btn .ui-btn-inner { padding-top: 40px !important; }
+	#footer-menu .ui-btn .ui-icon { width: 30px!important; height: 30px!important; margin-left: -15px !important; box-shadow: none!important; -moz-box-shadow: none!important; -webkit-box-shadow: none!important; -webkit-border-radius: 0 !important; border-radius: 0 !important; }
+	#icon-webcast .ui-icon { background:  url('../images/icons/live-white.png') 50% 50% no-repeat; background-size: 24px 24px; }
+	#icon-program .ui-icon { background:  url('../images/icons/schedule-white.png') 50% 50% no-repeat; background-size: 24px 24px; }
+	#icon-news .ui-icon { background:  url('../images/icons/news-white.png') 50% 50% no-repeat; background-size: 24px 22px; }
+	#icon-twitter .ui-icon { background:  url('../images/icons/twitter-white.png') 50% 50% no-repeat; background-size: 24px 24px; }
+	#icon-contact .ui-icon { background:  url('../images/icons/contact-white.png') 50% 50% no-repeat; background-size: 24px 24px; }
+	#icon-radio-webcast .ui-icon { background:  url('../images/icons/live-radio-white.png') 50% 50% no-repeat; background-size: 24px 24px; }
+	#icon-save .ui-icon { background:  url('../images/icons/save-white.png') 50% 50% no-repeat; background-size: 24px 24px; }
+	#icon-save-footer .ui-icon { background:  url('../images/icons/save-white-old.png') 50% 50% no-repeat; background-size: 24px 24px; }
+
+div.wp-caption {
+	width: auto !important;
+}
+div.wp-caption img {
+	max-width: none !important;
+	width: 100% !important;
+	height: auto !important;
+}

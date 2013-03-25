@@ -1,0 +1,81 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<meta charset="UTF-8">
+<title>
+	UNTV - Sample News Entry
+</title>
+<!-- Default CSS of jQuery Mobile - Starts -->
+<link href="jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css"/>
+<link href="jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
+<!-- Default CSS of jQuery Mobile Ends -->
+
+<!-- Other css files -->
+<link rel="stylesheet" href="css/jqm-docs.css" />
+<link rel="stylesheet" href="css/untv-mobile.css" />
+
+    <!-- PhoneGap JS -->
+    <script type="text/javascript" src="cordova-2.5.0.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+
+</head>
+
+<body onLoad="onLoad();">
+<div data-role="dialog">
+	
+		<div data-role="header" data-theme="d">
+			<h1>Delete Save News</h1>
+        </div>
+
+		<div data-role="content" data-theme="b">
+			<h1>Delete this News?</h1>
+	<a href="dialog/index.html" data-role="button" data-rel="back" data-theme="b" onClick="deleteRecord();">Yes</a>       
+			<a href="dialog/index.html" data-role="button" data-rel="back" data-theme="c">Cancel</a>    
+		</div>
+	</div>
+    <script type="text/javascript">
+
+var db = window.openDatabase("untv", "1.0", "UNTV DB", 1000000);
+var deleteStatement = "DELETE FROM SAVENEWS WHERE postid=?";
+
+function onLoad() {
+        document.addEventListener("deviceready", onDeviceReady, false);
+}
+            // Cordova is loaded and it is now safe to make calls Cordova methods
+    //
+    function onDeviceReady() {
+		
+    }
+	
+	
+function getParameterByName(name)
+{
+  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+  var regexS = "[\\?&]" + name + "=([^&#]*)";
+  var regex = new RegExp(regexS);
+  var results = regex.exec(window.location.search);
+  if(results == null)
+    return "";
+  else
+    return decodeURIComponent(results[1].replace(/\+/g, " "));
+}
+
+function deleteRecord(id) {
+	      var iid = getParameterByName("id");
+		  alert(iid);
+          db.transaction(function(tx) {
+          tx.executeSql(deleteStatement, [iid], showRecords, onError);
+        });
+
+      }  
+function showRecords() {
+	
+}
+  function onError(tx, error) {
+        alert(error.message);
+      }  
+
+</script>
+</body>
+</html>
