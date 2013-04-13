@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <!-- Activities -->
+    	
+    	<!-- NativeAudioPluginActivity -->
+    	<item name="NativeAudioPluginActivity_Button_playAudio" type="id" />
+    	<item name="NativeAudioPluginActivity_Button_pauseAudio" type="id" />
+    	<item name="NativeAudioPluginActivity_CheckBox_persistAudio" type="id" />
+    	<item name="NativeAudioPluginActivity_RelativeLayout_buttons" type="id" />
+    	
+    	<!-- NativeVideoPluginActivity -->
+    	<item name="NativeVideoPluginActivity_VideoView_vitamioVideo" type="id" />
+    	<item name="NativeVideoPluginActivity_FrameLayout_video" type="id" />
+    	<item name="NativeVideoPluginActivity_CheckBox_audioOnly" type="id" />
+    	<item name="NativeVideoPluginActivity_ProgressBar_load" type="id" />
+    	
+</resources>

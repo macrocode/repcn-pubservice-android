@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <string name="app_name">TestPhoneGap</string>
+    
+    <!-- Activities -->
+    	<!-- NativeAudioPluginActivity -->
+		<string name="NativeAudioPluginActivity_name">UNTV Radio Webcast</string>
+		<string name="NativeAudioPluginActivity_Button_playAudio">Play UNTV Radio</string>
+		<string name="NativeAudioPluginActivity_Button_pauseAudio">Pause UNTV Radio</string>
+		<string name="NativeAudioPluginActivity_CheckBox_persistAudio">Play on minimized?</string>
+		<string name="NativeAudioPluginActivity_message_error">Error initializing audio stream</string>
+		
+		<!-- NativeVideoPluginActivity -->
+	    <string name="NativeVideoPluginActivity_name">UNTV Webcast</string>
+		<string name="NativeVideoPluginActivity_CheckBox_audioOnly">Play on minimized?</string>
+		<string name="NativeVideoPluginActivity_message_error">Error initializing video stream</string>
+    
+    <!-- Services -->
+    	<!-- NativeAudioPluginService -->
+    	<string name="NativeAudioPluginService_message">Touch to control playback.</string>
+    	<string name="NativeAudioPluginService_started">UNTV Radio has started.</string>
+    	<string name="NativeAudioPluginService_stopped">UNTV Radio has stopped.</string>
+    	<string name="NativeAudioPluginService_label_play">Listening to UNTV Radio</string>
+    	<string name="NativeAudioPluginService_label_pause">UNTV Radio (paused)</string>
+    	<string name="NativeAudioPluginService_label_loading">Connecting to UNTV Radio</string>
+    	<string name="NativeAudioPluginService_label_ready">Connected to UNTV Radio</string>
+    
+    	<!-- NativeVideoPluginService -->
+    	<string name="NativeVideoPluginService_message">Touch to control playback.</string>
+    	<string name="NativeVideoPluginService_started">UNTV Webcast has started.</string>
+    	<string name="NativeVideoPluginService_stopped">UNTV Webcast has stopped.</string>
+    	<string name="NativeVideoPluginService_label_play">Watching UNTV Webcast (playing)</string>
+    	<string name="NativeVideoPluginService_label_pause">Watching UNTV Webcast (paused)</string>
+    	<string name="NativeVideoPluginService_label_loading">Connecting to UNTV Webcast</string>
+    	<string name="NativeVideoPluginService_label_ready">Connected to UNTV Webcast</string>
+    	
+    <!-- Fragments -->
+    	<!-- AudioOnBackgroundDialogFragment -->
+    	<string name="AudioOnBackgroundNoticeDialogFragment_title">Play audio on minimized?</string>
+    	<string name="AudioOnBackgroundNoticeDialogFragment_message">There will be a short delay before the audio starts again.</string>
+    	<string name="AudioOnBackgroundNoticeDialogFragment_ok">OK</string>
+    	<string name="AudioOnBackgroundNoticeDialogFragment_cancel">Cancel</string>
+    	
+</resources>

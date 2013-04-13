@@ -1,0 +1,222 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            UNTV
+        </title>
+        <!-- Default CSS of jQuery Mobile - Starts -->
+        <link href="jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css"/>
+        <link href="jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
+        <!-- Default CSS of jQuery Mobile Ends -->
+
+        <!-- Other css files -->
+        <link rel="stylesheet" href="css/jqm-docs.css" />
+        <link rel="stylesheet" href="css/untv-mobile.css" />
+
+        <!-- Default JS of jQuery Mobile - Starts -->
+        <script src="jquery-1.6.4.min.js" type="text/javascript"></script>
+        <script src="jquery.mobile-1.0.min.js" type="text/javascript"></script>
+        <!-- Default JS of jQuery Mobile - Ends -->
+
+        <!-- Other js files -->
+        <script src="js/jqm-docs.js" type="text/javascript"></script>
+            
+            <!-- PhoneGap JS -->
+            <script type="text/javascript" src="cordova-2.5.0.js"></script>
+            <script type="text/javascript" src="js/index.js"></script>
+    </head> 
+    <body id="untv" onload="onLoad();">
+        <div id="wrapper" data-role="page" class="type-home">
+            <div id="content" data-role="content">
+
+                <div class="content-secondary">
+
+                    <div id="untv-homeheader">
+                        <h1 id="untv-logo">
+                            <img src="images/untv/logo.png" alt="UNTV - Your Public Service Channel" />
+                        </h1>
+                    </div>
+                    <div id="home-divider"></div>
+
+                    <ul id="home-list" data-role="listview">
+                        <li>
+                            <a href="#" onclick="getStreaming('untv');" data-ajax="false">
+                                Watch 
+                            </a>
+                        </li>
+                    </ul>
+                    
+
+                </div> <!--/content-secondary -->
+
+                <div id="landing-page" class="content-primary">
+                    <img src="images/untv/kasangbahay.png" alt="" >
+                </div> <!-- END .content-primary -->
+
+
+
+            </div>
+            
+                
+                <div data-role="footer" data-position="fixed" data-fullscreen="true">
+            
+                <div id="footer-menu" data-role="navbar" data-iconpos="top" data-theme="a">
+                    <ul>
+                        <li>
+                            <a href="untv-news.html" id="icon-news" data-icon="custom" data-ajax="false">
+                                News
+                            </a>
+                        </li>
+                        <li>
+                            <a href="untv-programs.html" id="icon-program" data-icon="custom" data-ajax="false">
+                                Program    
+                            </a>
+                        </li>
+                        <li>
+                            <a href="untv-twitter.html" id="icon-twitter" data-icon="custom" data-ajax="false">
+                                Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a href="untv-save.html" id="icon-save-footer" data-icon="custom" data-ajax="false">
+                                Bookmarks
+                            </a>
+                        </li>
+                    </ul>
+                </div><!-- /navbar -->
+            
+            </div><!-- /footer -->
+                
+        </div>
+            <script type="text/javascript" src="js/NativeAudioVideoPlayerPlugin.js"></script>
+            <script type="text/javascript">
+                var isoffline;
+                function onLoad() {
+                    document.addEventListener("online", onOnline, false);
+                    document.addEventListener("deviceready", onDeviceReady, false);
+                }
+            
+                // Cordova is loaded and it is now safe to make calls Cordova methods
+                //
+                function onDeviceReady() {
+                    document.addEventListener("offline", onOffline, false);
+                }
+            
+                // Handle the online event
+                //
+                function onOnline() {
+                    isoffline = 0;
+                
+                }
+            
+                function onOffline() {
+                    // 
+                    isoffline = 1;
+                }
+            
+                function getstreamdata() {
+                    if (isoffline == 0)
+                    {
+                        //cue the page loader
+                        $.mobile.showPageLoadingMsg();
+                        //use theme swatch "b", a custom message, and no spinner
+                        $.mobile.showPageLoadingMsg("b", "Please wait...", true);
+                    
+                        getStreaming('untv');
+                    
+                        //hide the page loader
+                        $.mobile.hidePageLoadingMsg();
+                    }
+                    else {
+                        navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
+                    }
+                
+                }
+            </script>
+            <script type="text/javascript">
+                
+                var streamUrl;
+                app.initialize();
+                //<video>
+                
+                function getStreaming(media) {
+                    var url;
+                    if (media == "untv")
+                    {
+                        url = "http://www.untvweb.com/api/get_recent_posts/?callback=?&post_type=android";
+                    }
+                    else
+                    {
+                        url = "http://www.untvradio.com/api/get_recent_posts/?callback=?&post_type=android";
+                    }
+    
+                    $.getJSON(url).done(function (response) {
+                                        var r = response.posts; //here's your response
+                                        initPluginThroughActivity(r[0].excerpt);
+
+                                        });
+                    }
+
+                function initPluginThroughActivity(videoPath) {
+                    NativeAudioVideoPlayerPlugin.initVideoPluginThroughActivity(
+                    successHandler,
+                    error1,
+                    videoPath,							//the path to the video stream
+                    true,								//flag that dictates whether the video will automatically play or not
+                    false								//flag that dictates whether the video will persist ( video will continue playing in the background ) or not
+                );
+                }
+            
+                function initPlugin( videoPath ) {
+                    NativeAudioVideoPlayerPlugin.initVideoPlugin(
+                    successHandler,
+                    error2,
+                    videoPath,							//the path to the video stream
+                    true,								//flag that dictates whether the video will automatically play or not
+                    true								//flag that dictates whether the video will persist ( video will continue playing in the background ) or not
+                );
+                }
+            
+                function controlPlugin( action ) {
+                    if ( action == "playVideo" ) {
+                        NativeAudioVideoPlayerPlugin.playVideo( successHandler, error3 );
+                    }
+                    else if ( action == "pauseVideo" ) {
+                        NativeAudioVideoPlayerPlugin.pauseVideo( successHandler, error4 );
+                    }
+                }
+            
+                function stopPlugin() {
+                    NativeAudioVideoPlayerPlugin.stopVideoPlugin( successHandler, errorHandler );
+                }
+            
+                function successHandler ( result ) {}
+            
+                function errorHandler ( error ) {
+                    alert( "Error : \r\n" + error );
+                }
+            
+                function error1 ( error ) { 
+                    alert( "Video Activity Error : \r\n" + error ); 
+                }
+            
+                function error2 ( error ) { 
+                    alert( "Video Player Error : \r\n" + error ); 
+                }
+            
+                function error3 ( error ) { 
+                    alert( "Play Video Error : \r\n" + error ); 
+                }
+            
+                function error4 ( error ) { 
+                    alert( "Pause Video Error : \r\n" + error ); 
+                }
+                //</video>
+                
+                
+     
+            </script>
+
+    </body>
+</html>

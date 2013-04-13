@@ -1,0 +1,557 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            UNTV - News
+        </title>
+        <!-- Default CSS of jQuery Mobile - Starts -->
+        <link href="jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css"/>
+        <link href="jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
+        <!-- Default CSS of jQuery Mobile Ends -->
+
+        <!-- Other css files -->
+        <link rel="stylesheet" href="css/jqm-docs.css" />
+        <link rel="stylesheet" href="css/untv-mobile.css" />
+
+        <!-- PhoneGap JS -->
+        <script type="text/javascript" src="cordova-2.5.0.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+
+    </head>
+    <body id="untv" onload="onLoad()">
+        <div id="wrapper" data-role="page" class="type-home">
+
+            <div id="header" data-fullscreen="true" data-position="fixed" data-role="header" data-theme="a">
+                <a href="untv-home.html" data-role="button" data-theme="b" data-icon="back" class="ui-btn-left" data-rel="back" >
+                    Back
+                </a>
+                <h1 id="header-logo">
+                    <center>
+                        <img src="images/untv/logo.png" alt="UNTV - Your Public Service Channel" id="logo-untv" />
+                    </center>
+                </h1>
+                <a href="index.html" data-role="button" data-theme="b" data-icon="home" class="ui-btn-right" data-ajax="false">
+                    Home
+                </a>
+            </div><!-- /header -->
+
+            <div id="content" data-role="content">
+                <div id="iphone-mode">
+                    <div id="news-category" data-theme="b" class="content-secondary" data-role="collapsible">
+                        <div id="category-title-here" style="margin-top: 10px;"></div>
+
+                        <h3 id="iphone-category" class='title'>
+                            News Category
+                        </h3>
+                        
+                        <ul id="home-list" data-role="listview">
+
+
+                        </ul>
+
+
+                    </div> <!--/content-secondary -->
+
+                    <div id="iphone-newslist" class="content-primary">
+
+                        <h3 id="news-title" class="title">
+
+                        </h3>
+
+                        <ul id="newsroom" data-role="listview">
+
+
+                        </ul>
+                        <br />
+                        <div id="loadmore">
+
+                        </div>
+
+                    </div> <!-- END .content-primary -->
+                </div> <!-- END iphone-mode -->
+            </div> <!-- END #content -->
+
+            <div data-role="footer" data-position="fixed" data-fullscreen="true">
+
+                <div id="footer-menu" data-role="navbar" data-iconpos="top" data-theme="a">
+                    <ul>
+                        <li>
+                            <a href="untv-webcast.html" id="icon-webcast" data-icon="custom" data-ajax="false">
+                                Webcast
+                            </a>
+                        </li>
+                        <li>
+                            <a href="untv-programs.html" id="icon-program" data-icon="custom" data-ajax="false">
+                                Program    
+                            </a>
+                        </li>
+                        <li>
+                            <a href="untv-twitter.html" id="icon-twitter" data-icon="custom" data-ajax="false">
+                                Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a href="untv-save.html" id="icon-save-footer" data-icon="custom" data-ajax="false">
+                                Bookmarks
+                            </a>            
+                        </li>
+                    </ul>
+                </div><!-- /navbar -->
+
+            </div><!-- /footer -->
+        </div>
+
+        <!-- Default JS of jQuery Mobile - Starts -->
+        <script src="jquery-1.6.4.min.js" type="text/javascript"></script>
+        <script src="jquery.mobile-1.0.min.js" type="text/javascript"></script>
+        <script src="js/jqm-docs.js" type="text/javascript"></script>
+        <script type="text/javascript">
+
+            // Call onDeviceReady when Cordova is loaded.
+            //
+            // At this point, the document has loaded but cordova-2.4.0.js has not.
+            // When Cordova is loaded and talking with the native device,
+            // it will call the event `deviceready`.
+            //
+            var db = window.openDatabase("untv", "1.0", "UNTV DB", 1000000);
+            var catid;
+            var catname;
+            var localimage;
+            var isoffline;
+    
+            function onLoad() {
+                document.addEventListener("online", onOnline, false);
+                document.addEventListener("deviceready", onDeviceReady, false);
+            }
+
+            // Cordova is loaded and it is now safe to make calls Cordova methods
+            //
+            function onDeviceReady() {
+                document.addEventListener("offline", onOffline, false);
+            }
+
+            // Handle the online event
+            //
+            function onOnline() {
+                isoffline = 0;
+                var url = "http://www.untvweb.com/news/api/get_category_index/?callback=?";
+                $(document).ready(function () {
+                    // ------ Load News Category -------------//
+                          
+                    $.getJSON(url).done(function (response) {
+                        //console.log(response.categories);
+                        var posts = response.posts; //here's your response
+                        var r = response.categories;
+                        mycategory = response.categories;
+                        $('#category-title-here').append("<h3 class='title' id='categorytitle' style='text-align: left;'> News Category </h3>");
+                        $('#home-list').append('<ul id="untv-category">');
+                        var li = "", list = [];
+                        var y = 0;
+                        catname = new Array();
+                        catid = new Array();
+                        $.each(r, function (index, rObj) {
+                            //console.log(rObj);
+                            if (rObj.parent == 0)
+                            {
+                                //mycattile[index] = rObj.title;
+                                //mycatid[index] = rObj.id;
+                                y = y + 1;
+                                li = "";
+                                li += "<li><a href='#' onClick='loadcategory(" + rObj.id + ");' data-ajax='false'>";
+                                li += rObj.title;
+                                li += "</a></li>";
+                                list[index] = li;
+                                catid[y] =  rObj.id;
+                                catname[y] = rObj.title;
+                            }
+                        });
+                        //list = list.reverse();
+                        db.transaction(function (tx) {
+                            tx.executeSql('DROP TABLE IF EXISTS CATEGORY');
+                            tx.executeSql('CREATE TABLE IF NOT EXISTS CATEGORY (id unique, data)');
+                            $.each(catid,
+                            function( intIndex, objValue ){
+                                if (intIndex != 0)
+                                {
+                                    tx.executeSql("INSERT INTO CATEGORY(id, data) VALUES (?,?)",[objValue, catname[intIndex]]);
+                                }
+                            }
+                        );
+                        },errorCB, successCB);
+						
+                        $('ul#home-list').append(list.join(''));
+                        $("#home-list").listview("refresh");
+					
+                        $('ul#home-list1').append(list.join(''));
+                        $("#home-list1").listview("refresh");
+					
+                        // ------ End of Load News Category -------------//
+                    }); 
+				
+				
+                    // ------Load Recent News ------- //
+                    loadrecent();
+				 
+                });
+			
+                // Insert Data to database
+                //db.transaction(populateDB, errorCB, successCB);
+
+            }
+    
+            function populateDB(tx) {
+                tx.executeSql('DROP TABLE IF EXISTS CATEGORY');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS CATEGORY (id unique, data)');
+                tx.executeSql("INSERT INTO CATEGORY(id, data) VALUES (?,?)",[catid[0], catname[0]]);
+                tx.executeSql("INSERT INTO CATEGORY(id, data) VALUES (?,?)",[catid[1], catname[1]]);
+                tx.executeSql("INSERT INTO CATEGORY(id, data) VALUES (?,?)",[catid[2], catname[2]]);
+                tx.executeSql("INSERT INTO CATEGORY(id, data) VALUES (?,?)",[catid[3], catname[3]]);
+                tx.executeSql("INSERT INTO CATEGORY(id, data) VALUES (?,?)",[catid[4], catname[4]]);
+            }
+
+            function errorCB(err) {
+                navigator.notification.alert(
+                'News Details Error processing SQL: ' +err.code,  // message
+                alertDismissed,         // callback
+                'UNTV Mobile',            // title
+                'Done'                  // buttonName
+            );
+            }
+            function errorCB1(err) {
+                navigator.notification.alert(
+                'News Details Error processing SQL: ' +err.code,  // message
+                alertDismissed,         // callback
+                'UNTV Mobile',            // title
+                'Done'                  // buttonName
+            );
+				
+            }
+            function successCB() {
+                //alert("success!");
+            }
+	
+            function successCB1() {
+                //alert("success inserting news details!");
+            }
+	
+            // Handle the offline event
+            //
+            function onOffline() {
+                isoffline = 1;
+                db.transaction(queryDB, errorCB);
+                $('#category-title-here').append("<h3 class='title' id='categorytitle'>News Category </h3>");
+            }
+	
+            // Query the database
+            //
+            function queryDB(tx) {
+                tx.executeSql('CREATE TABLE IF NOT EXISTS CATEGORY (id unique, data)');
+                tx.executeSql('SELECT * FROM CATEGORY', [], querySuccess, errorCB);
+                tx.executeSql("SELECT * FROM NEWS where catid='0216'", [], querySuccess1, errorCB1);
+            }
+	
+            // Query the success callback
+            //
+            function querySuccess(tx, results) {
+                var len = results.rows.length;
+                if (len == 0)
+                {
+                    navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
+                }
+                $('#home-list').append('<ul id="untv-category">');
+                var li = "";
+                for (var i=0; i<len; i++){
+                    li += "<li><a href='#' onClick='loadofflinemsg();' data-ajax='false'>";
+                    li += results.rows.item(i).data;
+                    li += "</a></li>";
+			
+                }
+                $('ul#home-list').append(li);
+                $("#home-list").listview("refresh");
+		
+            }
+	
+            function loadofflinemsg() 
+            {
+                $("#news-title").text("You are currently offline");
+                $('#newsroom').empty();
+                $('#loadmore').empty();
+                $("#newsroom").listview("refresh");	
+            }
+	
+            function querySuccess1(tx, results) {
+                var len = results.rows.length;
+                $("#news-title").text("Latest News");
+                $('#newsroom').append('<ul>');
+                var li = "";
+                for (var i=0; i<len; i++){
+                    //console.log(rObj);
+                    li += "<li>";
+                    li += "<a href='untv-newsdetails.html?id=" +  results.rows.item(i).postid + "' data-ajax='false'>";
+                    li += "<img src='images/ito-ang-balita1.png' />";
+                    li += "<h4>"+ results.rows.item(i).newstitle +"</h4>";
+                    li += "<p><i>"+ results.rows.item(i).datepub + "</i><br />" + results.rows.item(i).excerpt +"</p>";
+                    li += "</a></li>";
+                }
+                $('ul#newsroom').append(li);
+                $("#newsroom").listview("refresh");		
+            }
+	 
+            // Global Variables	
+            var totalpost;
+            var totalpage;
+            var currentpage = 1;
+
+
+            function loadmore(newsid)
+            {
+                if (currentpage < totalpage)
+                {
+                    //cue the page loader
+                    $.mobile.showPageLoadingMsg();
+			
+                    //use theme swatch "b", a custom message, and no spinner
+                    $.mobile.showPageLoadingMsg("b", "Please wait...", true);
+			
+                    currentpage = currentpage + 1;
+			
+                    var url2 = "http://www.untvweb.com/news/api/get_category_posts/?callback=?&count=10&id=" + newsid + "?&page=" + currentpage;
+                    $.getJSON(url2).done(function (response) {
+                        $("#news-title").text(response.category.title);
+                        var posts = response.posts; //here's your response
+                        $('#newsroom').append('<ul>');
+                        var li = "", list = [];
+                        $.each(posts, function (index, rObj) {
+                            //console.log(rObj);
+                            li += "<li>";
+                            li += "<a href='untv-newsdetails.html?id=" + rObj.id + "' data-ajax='false'>";
+                            li += "<img src='" + rObj.thumbnail  + "' />";
+                            li += "<h4>"+ rObj.title +"</h4>";
+                            li += "<p><i>"+ rObj.date + "</i><br />" + rObj.excerpt +"</p>";
+                            li += "</a></li>";
+                            list[index] = li;
+                        });
+                        //list = list.reverse();
+                        $('ul#newsroom').append(li);
+                        $("#newsroom").listview("refresh");
+					
+					
+                        //hide the page loader
+                        $.mobile.hidePageLoadingMsg();
+                    });
+                }
+                else if (currentpage == totalpage)
+                {
+                    $('#loadmore').empty();
+                }
+            }	
+  
+  
+            function loadcategory(newsid)
+            {
+                currentpage = 1;
+                var postid;
+                var newstitle;
+                var datepub;
+                var excerpt;
+                var content;
+                //cue the page loader
+                $.mobile.showPageLoadingMsg();
+                //use theme swatch "b", a custom message, and no spinner
+                $.mobile.showPageLoadingMsg("b", "Please wait...", true);
+			
+                $('#newsroom').empty();
+                $('#loadmore').empty();
+                var url2 = "http://www.untvweb.com/news/api/get_category_posts/?callback=?&count=10&id=" + newsid;
+                $.getJSON(url2).done(function (response) {
+                    $("#news-title").text(response.category.title);
+                    var posts = response.posts; //here's your response
+                    $('#newsroom').append('<ul>');
+                    var li = "";
+					
+                    postid  = new Array();
+                    newstitle  = new Array();
+                    datepub  = new Array();
+                    excerpt  = new Array();
+                    content  = new Array();
+                    var y = 0;
+                    $.each(posts, function (index, rObj) {
+                        //console.log(rObj);
+                        li += "<li>";
+                        li += "<a href='untv-newsdetails.html?id=" + rObj.id + "' data-ajax='false'>";
+                        li += "<img src='" + rObj.thumbnail  + "' />";
+                        li += "<h4>"+ rObj.title +"</h4>";
+                        li += "<p><i>"+ rObj.date + "</i><br />" + rObj.excerpt +"</p>";
+                        li += "</a></li>";
+                        postid[y] = rObj.id;
+                        newstitle[y] = rObj.title;
+                        datepub[y]  = rObj.date;
+                        excerpt[y]  = rObj.excerpt;
+                        content[y]  = rObj.content;
+                        y = y + 1;
+                    });
+                    //list = list.reverse();
+                    $('ul#newsroom').append(li);
+                    $("#newsroom").listview("refresh");
+					
+                    //---------insert to local database -----------------------//
+                    db.transaction(function (tx) {
+                        tx.executeSql('CREATE TABLE IF NOT EXISTS NEWS (postid unique,catid,newstitle,datepub,excerpt,content,thumbnail)');
+                        $.each(postid,
+                        function( intIndex, objValue ){
+                            tx.executeSql("INSERT INTO NEWS (postid, catid,newstitle,datepub,excerpt,content) VALUES (?,?,?,?,?,?)",[objValue,newsid, newstitle[intIndex],datepub[intIndex],excerpt[intIndex],content[intIndex]]);
+                        }
+                    );
+                    },errorCB1, successCB1);
+                    // ------------insert to database	------------------------//
+						
+                    // generate load more button
+                    $('#loadmore').append('<a href="" data-icon="arrow-d" onClick="loadmore('+ newsid +');" id="myNewButton">Load more...</a>');
+                    $('#myNewButton').button();
+                    totalpage = response.pages;
+                    totalpost = response.category.post_count;
+                    //hide the page loader
+                    $.mobile.hidePageLoadingMsg();
+                });
+				 
+				
+            }
+  
+  
+            function successCB2(tx, results) {
+                var len = results.rows.length;
+                $('#newsroom').append('<ul>');
+                var li = "";
+                for (var i=0; i<len; i++){
+                    //console.log(rObj);
+                    li += "<li>";
+                    li += "<a href='untv-newsdetails.html?id=" +  results.rows.item(i).postid + "' data-ajax='false'>";
+                    li += "<img src='images/ito-ang-balita1.png' />";
+                    li += "<h4>"+ results.rows.item(i).newstitle +"</h4>";
+                    li += "<p><i>"+ results.rows.item(i).pubdate + "</i><br />" + results.rows.item(i).excerpt +"</p>";
+                    li += "</a></li>";
+                }
+                $('ul#newsroom').append(li);
+                $("#newsroom").listview("refresh");		
+            }
+	
+            // ------ Load Recent News ----------- //
+            function loadrecent()
+            {
+                currentpage = 1;
+                var postid;
+                var newstitle;
+                var datepub;
+                var excerpt;
+                var content;
+                var thumbnail;
+                //cue the page loader
+                $.mobile.showPageLoadingMsg();
+			
+                //use theme swatch "b", a custom message, and no spinner
+                $.mobile.showPageLoadingMsg("b", "Please wait....", true);
+			
+                $('#newsroom').empty();
+                $('#loadmore').empty();
+                var url2 = "http://www.untvweb.com/news/api/get_recent_posts/?callback=?&count=10";
+                $.getJSON(url2).done(function (response) {
+                    $("#news-title").text("Latest News");
+                    var posts = response.posts; //here's your response
+                    $('#newsroom').append('<ul>');
+                    var li = "", list = [];
+                    postid  = new Array();
+                    newstitle  = new Array();
+                    datepub  = new Array();
+                    excerpt  = new Array();
+                    content  = new Array();
+                    thumbnail  = new Array();
+                    var y = 0;
+                    $.each(posts, function (index, rObj) {
+                        //console.log(rObj);
+                        li += "<li>";
+                        li += "<a href='untv-newsdetails.html?id=" + rObj.id + "' data-ajax='false'>";
+                        li += "<img src='" + rObj.thumbnail  + "' />";
+                        li += "<h4>"+ rObj.title +"</h4>";
+                        li += "<p><i>"+ rObj.date + "</i><br />" + rObj.excerpt +"</p>";
+                        li += "</a></li>";
+                        //list[index] = li;
+                        postid[y] = rObj.id;
+                        newstitle[y]  = rObj.title;
+                        datepub[y]  = rObj.date;
+                        excerpt[y]  = rObj.excerpt;
+                        content[y]  = rObj.content;
+                        // save image to device
+                        thumbnail[y] = rObj.thumbnail;
+                        y = y + 1;
+                    });
+                    //list = list.reverse();
+                    $('ul#newsroom').append(li);
+                    $("#newsroom").listview("refresh");
+						
+                    // insert to local database
+                    var mycatid = "0216";
+                    db.transaction(function (tx) {
+                        tx.executeSql('DROP TABLE IF EXISTS NEWS');
+                        tx.executeSql('CREATE TABLE IF NOT EXISTS NEWS (postid unique, catid,newstitle,datepub,excerpt,content,thumbnail)');
+                        $.each(postid,
+                        function( intIndex, objValue ){
+                            tx.executeSql("INSERT INTO NEWS (postid,catid, newstitle,datepub,excerpt,content) VALUES (?,?,?,?,?,?)",[objValue,  mycatid, newstitle[intIndex],datepub[intIndex],excerpt[intIndex],content[intIndex]]);
+                        }
+                    );
+                    },errorCB1, successCB1);
+				
+		
+                    //hide the page loader
+                    $.mobile.hidePageLoadingMsg();
+
+                });
+				
+            }
+  
+            function getfile(strimageurl)
+            {
+                var fileNameIndex = strimageurl.lastIndexOf("/") + 1;
+                var filename = strimageurl.substr(fileNameIndex);
+                window.requestFileSystem(
+                LocalFileSystem.PERSISTENT, 0, 
+                function onFileSystemSuccess(fileSystem) {
+                    fileSystem.root.getFile(
+                    "dummy.html", {create: true, exclusive: false}, 
+                    function gotFileEntry(fileEntry){
+                        var sPath = fileEntry.fullPath.replace("dummy.html","");
+                        var fileTransfer = new FileTransfer();
+                        fileEntry.remove();
+                        fileTransfer.download(
+                        strimageurl,
+                        sPath + filename,
+                        function(theFile) {
+                            alert("download complete: " + theFile.toURI());
+                            //localimage = theFile.toURI();
+                        },
+                        function(error) {
+                            alert("download error source " + error.source);
+                            alert("download error target " + error.target);
+                            alert("upload error code: " + error.code);
+                        }
+                    );
+                    }, 
+                    fail);
+                }, 
+                fail);
+            }
+    
+            function getstreamdata() {
+                if (isoffline == 0)
+                {
+                    getStreaming('untv');
+                }
+                else {
+                    navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
+                }
+        
+            }
+        </script>
+
+    </body>
+</html>

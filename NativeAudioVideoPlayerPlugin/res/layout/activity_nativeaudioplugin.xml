@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+    android:paddingLeft="16dip"
+    android:paddingRight="16dip" >
+	
+    <RelativeLayout
+        android:id="@id/NativeAudioPluginActivity_RelativeLayout_buttons"
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        
+        android:padding="4dip" >
+        
+	    <Button style="?android:textAppearanceMedium"
+	        android:id="@id/NativeAudioPluginActivity_Button_playAudio"
+	        
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentTop="true"
+	        
+	        android:paddingLeft="20dip"
+	        android:paddingRight="20dip"
+	        
+	        android:text="@string/NativeAudioPluginActivity_Button_playAudio" />
+	
+	    <Button style="?android:textAppearanceMedium"
+	        android:id="@id/NativeAudioPluginActivity_Button_pauseAudio"
+	        
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_toRightOf="@id/NativeAudioPluginActivity_Button_playAudio"
+	        
+	        android:paddingLeft="20dip"
+	        android:paddingRight="20dip"
+	        
+	        android:text="@string/NativeAudioPluginActivity_Button_pauseAudio" />
+    
+    </RelativeLayout>
+    
+     <CheckBox style="?android:textAppearanceMedium"
+        android:id="@id/NativeAudioPluginActivity_CheckBox_persistAudio"
+        
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/NativeAudioPluginActivity_RelativeLayout_buttons"
+        android:layout_centerHorizontal="true"
+        
+        android:paddingTop="4dip"
+        android:paddingBottom="4dip"
+        
+        android:singleLine="false"
+        android:maxLines="2"
+        
+        android:text="@string/NativeAudioPluginActivity_CheckBox_persistAudio" />
+    
+</RelativeLayout>

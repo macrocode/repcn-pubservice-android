@@ -1,0 +1,59 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    
+    android:background="#FF000000" >
+	
+    <FrameLayout
+        android:id="@id/NativeVideoPluginActivity_FrameLayout_video"
+        
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1" >
+    	
+		<io.vov.vitamio.widget.CenterLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical" >
+        
+			<io.vov.vitamio.widget.VideoView 
+				android:id="@id/NativeVideoPluginActivity_VideoView_vitamioVideo"
+				
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:layout_centerHorizontal="true"
+				android:layout_centerVertical="true" />
+			
+		</io.vov.vitamio.widget.CenterLayout>
+		
+	    <ProgressBar
+	        android:id="@id/NativeVideoPluginActivity_ProgressBar_load"
+	        
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center"
+	        
+	        android:visibility="invisible" />
+        
+    </FrameLayout>
+    
+    <CheckBox style="?android:textAppearanceMedium"
+		android:id="@id/NativeVideoPluginActivity_CheckBox_audioOnly"
+		
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_gravity="center"
+		
+		android:paddingTop="4dip"
+		android:paddingBottom="4dip"
+		
+		android:singleLine="false"
+		android:maxLines="2"
+		
+		android:text="@string/NativeVideoPluginActivity_CheckBox_audioOnly" />
+    
+</LinearLayout>
