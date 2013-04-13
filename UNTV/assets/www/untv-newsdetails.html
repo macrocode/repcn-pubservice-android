@@ -1,231 +1,306 @@
 <!DOCTYPE html> 
 <html>
-<head>
-<meta charset="UTF-8">
-<title>
-	UNTV - Sample News Entry
-</title>
-<!-- Default CSS of jQuery Mobile - Starts -->
-<link href="jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css"/>
-<link href="jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
-<!-- Default CSS of jQuery Mobile Ends -->
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            UNTV - Sample News Entry
+        </title>
+        <!-- Default CSS of jQuery Mobile - Starts -->
+        <link href="jquery.mobile.theme-1.0.min.css" rel="stylesheet" type="text/css"/>
+        <link href="jquery.mobile.structure-1.0.min.css" rel="stylesheet" type="text/css"/>
+        <!-- Default CSS of jQuery Mobile Ends -->
 
-<!-- Other css files -->
-<link rel="stylesheet" href="css/jqm-docs.css" />
-<link rel="stylesheet" href="css/untv-mobile.css" />
+        <!-- Other css files -->
+        <link rel="stylesheet" href="css/jqm-docs.css" />
+        <link rel="stylesheet" href="css/untv-mobile.css" />
 
-    <!-- PhoneGap JS -->
-    <script type="text/javascript" src="cordova-2.5.0.js"></script>
-    <script type="text/javascript" src="js/index.js"></script>
+        <!-- PhoneGap JS -->
+        <script type="text/javascript" src="cordova-2.5.0.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
 
+
+    </head>
+
+    <body id="untv" onload="onLoad()"> 
+
+        <div id="wrapper" data-role="page">
+
+            <div id="header" data-fullscreen="true" data-position="fixed" data-role="header" data-theme="a">
+                <a href="untv-home.html" data-role="button" data-theme="b" data-icon="back" class="ui-btn-left" data-rel="back" >
+                    Back
+                </a>
+                <h1 id="header-logo">
+                    <center>
+                        <img src="images/untv/logo.png" alt="UNTV - Your Public Service Channel" id="logo-untv" />
+                    </center>
+                </h1>
+                <a href="index.html" data-role="button" data-theme="b" data-icon="home" class="ui-btn-right" data-ajax="false">
+                    Home
+                </a>
+            </div><!-- /header -->
+
+            <div data-role="content">	
+                <div id="news-entry">
+                    <div id="news-entry-header">
+                        <h2 id="newstitle">
+
+                        </h2>
+                        <p class="date" id="pubdate">
+
+                        </p>
+                    </div>
+                    <div id="newscontent">
+
+                    </div> 
+                    <div id="excerpt" style="display:none">
+
+                    </div>
+                    <div id="thumbnail" style="display:none">
+
+                    </div>
+                    <div id="save-article">
+                        <a href="#" data-role="button" data-theme="b" data-inline="true" data-mini="true" id="icon-save" data-icon="custom" onClick="savedata();" >Save</a>
+                    </div>
+                </div>
+            </div><!-- /content -->
+
+            <div data-role="footer" data-position="fixed" data-fullscreen="true">
+
+                <div id="footer-menu" data-role="navbar" data-iconpos="top" data-theme="a">
+                    <ul>
+                        <li>
+                            <a href="#" onclick="getstreamdata();" id="icon-webcast" data-icon="custom" data-ajax="false">
+                                Webcast
+                            </a>
+                        </li>
+                        <li>
+                            <a href="untv-programs.html" id="icon-program" data-icon="custom" data-ajax="false">
+                                Program    
+                            </a>
+                        </li>
+                        <li>
+                            <a href="untv-twitter.html" id="icon-twitter" data-icon="custom" data-ajax="false">
+                                Twitter
+                            </a>
+                        </li>
+                        <li>
+                            <a href="untv-save.html" id="icon-save-footer" data-icon="custom" data-ajax="false">
+                                Bookmarks
+                            </a>
+                        </li>
+                    </ul>
+                </div><!-- /navbar -->
+
+            </div><!-- /footer -->
+
+        </div><!-- /page -->
+
+        <!-- Default JS of jQuery Mobile - Starts -->
+        <script src="jquery-1.6.4.min.js" type="text/javascript"></script>
+        <script src="jquery.mobile-1.0.min.js" type="text/javascript"></script>
+        <!-- Default JS of jQuery Mobile - Ends -->
+
+        <!-- Other js files -->
+        <script src="js/jqm-docs.js" type="text/javascript"></script>
+        <script type="text/javascript" src="js/NativeAudioVideoPlayerPlugin.js"></script>
+        <script type="text/javascript">
+
+            var db = window.openDatabase("untv", "1.0", "UNTV DB", 1000000);
+            var isoffline = 0;
     
-</head>
+            function getParameterByName(name)
+            {
+                name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                var regexS = "[\\?&]" + name + "=([^&#]*)";
+                var regex = new RegExp(regexS);
+                var results = regex.exec(window.location.search);
+                if(results == null)
+                    return "";
+                else
+                    return decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
 
-<body id="untv" onload="onLoad()"> 
-
-<div id="wrapper" data-role="page">
-
-	<div id="header" data-fullscreen="true" data-position="fixed" data-role="header" data-theme="a">
-    	<a href="untv-home.html" data-role="button" data-theme="b" data-icon="back" class="ui-btn-left" data-rel="back" >
-        	Back
-        </a>
-        <h1 id="header-logo">
-        	<center>
-				<img src="images/untv/logo.png" alt="UNTV - Your Public Service Channel" id="logo-untv" />
-            </center>
-        </h1>
-    	<a href="index.html" data-role="button" data-theme="b" data-icon="home" class="ui-btn-right" data-ajax="false">
-        	Home
-        </a>
-	</div><!-- /header -->
-
-	<div data-role="content">	
-    	<div id="news-entry">
-        <div id="news-entry-header">
-            <h2 id="newstitle">
-
-            </h2>
-            <p class="date" id="pubdate">
-
-            </p>
-        </div>
-        <div id="newscontent">
-		  
-        </div> 
-        <div id="excerpt" style="display:none">
-		  
-        </div>
-        <div id="thumbnail" style="display:none">
-		  
-        </div>
-            <div id="save-article">
-                <a href="#" data-role="button" data-theme="b" data-inline="true" data-mini="true" id="icon-save" data-icon="custom" onClick="savedata();" >Save</a>
-            </div>
-        </div>
-	</div><!-- /content -->
-	
-	<div data-role="footer" data-position="fixed" data-fullscreen="true">
-		
-       <div id="footer-menu" data-role="navbar" data-iconpos="top" data-theme="a">
-            <ul>
-                <li>
-                    <a href="untv-webcast.html" id="icon-webcast" data-icon="custom" data-ajax="false">
-                    	Webcast
-                    </a>
-                </li>
-                <li>
-                	<a href="untv-programs.html" id="icon-program" data-icon="custom" data-ajax="false">
-                		Program    
-                    </a>
-                </li>
-                <li>
-                	<a href="untv-twitter.html" id="icon-twitter" data-icon="custom" data-ajax="false">
-                		Twitter
-                    </a>
-                </li>
-                <li>
-                    <a href="untv-save.html" id="icon-save-footer" data-icon="custom" data-ajax="false">
-                    	Bookmarks
-                    </a>
-                </li>
-            </ul>
-        </div><!-- /navbar -->
-    
-	</div><!-- /footer -->
-	
-</div><!-- /page -->
-
-<!-- Default JS of jQuery Mobile - Starts -->
-<script src="jquery-1.6.4.min.js" type="text/javascript"></script>
-<script src="jquery.mobile-1.0.min.js" type="text/javascript"></script>
-<!-- Default JS of jQuery Mobile - Ends -->
-
-<!-- Other js files -->
-<script src="js/jqm-docs.js" type="text/javascript"></script>
-<script type="text/javascript">
-
-var db = window.openDatabase("untv", "1.0", "UNTV DB", 1000000);
-var isoffline = 0;
-    
-function getParameterByName(name)
-{
-  name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-  var regexS = "[\\?&]" + name + "=([^&#]*)";
-  var regex = new RegExp(regexS);
-  var results = regex.exec(window.location.search);
-  if(results == null)
-    return "";
-  else
-    return decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
-    function onLoad() {
-		document.addEventListener("online", onOnline, false);
-        document.addEventListener("deviceready", onDeviceReady, false);
-		// set tap button events
+            function onLoad() {
+                document.addEventListener("online", onOnline, false);
+                document.addEventListener("deviceready", onDeviceReady, false);
+                // set tap button events
                 
-    }
-	 // Cordova is loaded and it is now safe to make calls Cordova methods
-    //
-    function onDeviceReady() {
-		document.addEventListener("offline", onOffline, false);
-	}
+            }
+            // Cordova is loaded and it is now safe to make calls Cordova methods
+            //
+            function onDeviceReady() {
+                document.addEventListener("offline", onOffline, false);
+            }
 	
-    // Handle the online event
-    function onOnline() {
-        isoffline = 0;
-	        //cue the page loader
-			$.mobile.showPageLoadingMsg();
+            // Handle the online event
+            function onOnline() {
+                isoffline = 0;
+                //cue the page loader
+                $.mobile.showPageLoadingMsg();
 			
-			//use theme swatch "b", a custom message, and no spinner
-			$.mobile.showPageLoadingMsg("b", "This is only a test", true);
+                //use theme swatch "b", a custom message, and no spinner
+                $.mobile.showPageLoadingMsg("b", "This is only a test", true);
 			
-		var iid = getParameterByName("id");
+                var iid = getParameterByName("id");
 	    
-		 var url = "http://www.untvweb.com/news/api/get_post/?callback=?&id=" + iid;
-		      $.getJSON(url).done(function (response) {
+                var url = "http://www.untvweb.com/news/api/get_post/?callback=?&id=" + iid;
+                $.getJSON(url).done(function (response) {
                     console.log(response.post);
                     //var posts = response.posts; //here's your response
                     var r = response.post;
-					$("#newstitle").text(r.title_plain); 
-					$("#pubdate").text(r.date); 
-					$("#newscontent").html(r.content);
-					$("#excerpt").html(r.excerpt);
-					$("#thumbnail").html(r.thumbnail);
+                    $("#newstitle").text(r.title_plain); 
+                    $("#pubdate").text(r.date); 
+                    $("#newscontent").html(r.content);
+                    $("#excerpt").html(r.excerpt);
+                    $("#thumbnail").html(r.thumbnail);
                 });
 			 
-			//hide the page loader
-			$.mobile.hidePageLoadingMsg();	
-	}
+                //hide the page loader
+                $.mobile.hidePageLoadingMsg();	
+            }
 	
-	// Handle the offline event
-    function onOffline() {
-        isoffline = 1;
-		db.transaction(queryDB, errorCB1);
-    }
+            // Handle the offline event
+            function onOffline() {
+                isoffline = 1;
+                db.transaction(queryDB, errorCB1);
+            }
 	
-	// Query the database
-    function queryDB(tx) {
-		var iid = getParameterByName("id");
-		//alert('SELECT * FROM NEWS where postid=' + iid);
-        tx.executeSql('SELECT * FROM NEWS where postid=' + iid, [], querySuccess1, errorCB1);
-    }
+            // Query the database
+            function queryDB(tx) {
+                var iid = getParameterByName("id");
+                //alert('SELECT * FROM NEWS where postid=' + iid);
+                tx.executeSql('SELECT * FROM NEWS where postid=' + iid, [], querySuccess1, errorCB1);
+            }
 	
-	function querySuccess1(tx, results) {
-	 var len = results.rows.length;
-         var s;
-         var $s
-         //alert(len);
-	  for (var i=0; i<len; i++){
-            //console.log(rObj);
-            s = results.rows.item(i).content;
-            $s = $(s).not('div');
-            $("#newstitle").text(results.rows.item(i).newstitle); 
-			$("#pubdate").text(results.rows.item(i).datepub); 
-			$("#newscontent").html($s);
-	   }
+            function querySuccess1(tx, results) {
+                var len = results.rows.length;
+                var s;
+                var $s
+                //alert(len);
+                for (var i=0; i<len; i++){
+                    //console.log(rObj);
+                    s = results.rows.item(i).content;
+                    $s = $(s).not('div');
+                    $("#newstitle").text(results.rows.item(i).newstitle); 
+                    $("#pubdate").text(results.rows.item(i).datepub); 
+                    $("#newscontent").html($s);
+                }
 	   	
-	}
+            }
 	
-	function errorCB1(err) {
-        alert("News Details Error processing SQL: "+err.code);
-     }
-	function savedata()
-	{
-	   // get Postid
-	   var iid = getParameterByName("id");
-	   // Process DB
-	   db.transaction(function (tx) {
+            function errorCB1(err) {
+                alert("News Details Error processing SQL: "+err.code);
+            }
+            function savedata()
+            {
+                // get Postid
+                var iid = getParameterByName("id");
+                // Process DB
+                db.transaction(function (tx) {
 	     
-		 // create table 
-		 tx.executeSql('CREATE TABLE IF NOT EXISTS SAVENEWS (id INTEGER PRIMARY KEY AUTOINCREMENT,postid, catid,newstitle,datepub,excerpt,content,thumbnail)');
+                    // create table 
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS SAVENEWS (id INTEGER PRIMARY KEY AUTOINCREMENT,postid, catid,newstitle,datepub,excerpt,content,thumbnail)');
 		 
-		 // insert record
-		 tx.executeSql("INSERT INTO SAVENEWS (postid, newstitle,datepub,excerpt,content,thumbnail) VALUES (?,?,?,?,?,?)",[iid, $("#newstitle").text(),$("#pubdate").text(),$("#excerpt").text(),$("#newscontent").text(),$("#thumbnail").text()]); }
-		  ,errorCB1, successCB1);
+                    // insert record
+                    tx.executeSql("INSERT INTO SAVENEWS (postid, newstitle,datepub,excerpt,content,thumbnail) VALUES (?,?,?,?,?,?)",[iid, $("#newstitle").text(),$("#pubdate").text(),$("#excerpt").text(),$("#newscontent").text(),$("#thumbnail").text()]); }
+                ,errorCB1, successCB1);
 					
-	}
+            }
 	
-	function successCB1() {
-   		navigator.notification.alert('News Successfully Saved!', null, "UNTV News", "Ok")
-        $("#icon-save").css("visibility", "hidden");
+            function successCB1() {
+                navigator.notification.alert('News Successfully Saved!', null, "UNTV News", "Ok")
+                $("#icon-save").css("visibility", "hidden");
 		
-	}
+            }
 	
-	function errorCB1(err) {
-        //alert("Error processing SQL: "+err.code + ' ' + err.message);
-		navigator.notification.alert("News Already Saved!", null, "UNTV News", "Ok")
+            function errorCB1(err) {
+                //alert("Error processing SQL: "+err.code + ' ' + err.message);
+                navigator.notification.alert("News Already Saved!", null, "UNTV News", "Ok")
 		
-    }
-    function getstreamdata() {
-     if (isoffline == 0)
-        {
-            getStreaming('untv');
-        }
-         else {
-           navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
-      }
-    }
-</script>
-</body>
+            }
+            function getstreamdata() {
+                if (isoffline == 0)
+                {
+                    getStreaming('untv');
+                    
+                    // Video Streaming - Starts
+                    var url = "http://www.untvweb.com/api/get_recent_posts/?callback=?&post_type=android";
+                    $.getJSON(url).done(function (response) {
+                        var r = response.posts; //here's your response
+                        initPluginThroughActivity(r[0].excerpt);
+                    });
+                    // Video Streaming - Ends
+                }
+                else {
+                    navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
+                }
+            }
+            //-------start of script plugin-----------------
+                var streamUrl;
+                app.initialize();
+                //<video>
+                
+                function getStreaming() {
+                    
+                }
+
+                function initPluginThroughActivity(videoPath) {
+                    NativeAudioVideoPlayerPlugin.initVideoPluginThroughActivity(
+                    successHandler,
+                    error1,
+                    videoPath,							//the path to the video stream
+                    true,								//flag that dictates whether the video will automatically play or not
+                    false								//flag that dictates whether the video will persist ( video will continue playing in the background ) or not
+                );
+                }
+            
+                function initPlugin( videoPath ) {
+                    NativeAudioVideoPlayerPlugin.initVideoPlugin(
+                    successHandler,
+                    error2,
+                    videoPath,							//the path to the video stream
+                    true,								//flag that dictates whether the video will automatically play or not
+                    true								//flag that dictates whether the video will persist ( video will continue playing in the background ) or not
+                );
+                }
+            
+                function controlPlugin( action ) {
+                    if ( action == "playVideo" ) {
+                        NativeAudioVideoPlayerPlugin.playVideo( successHandler, error3 );
+                    }
+                    else if ( action == "pauseVideo" ) {
+                        NativeAudioVideoPlayerPlugin.pauseVideo( successHandler, error4 );
+                    }
+                }
+            
+                function stopPlugin() {
+                    NativeAudioVideoPlayerPlugin.stopVideoPlugin( successHandler, errorHandler );
+                }
+            
+                function successHandler ( result ) {}
+            
+                function errorHandler ( error ) {
+                    alert( "Error : \r\n" + error );
+                }
+            
+                function error1 ( error ) { 
+                    alert( "Video Activity Error : \r\n" + error ); 
+                }
+            
+                function error2 ( error ) { 
+                    alert( "Video Player Error : \r\n" + error ); 
+                }
+            
+                function error3 ( error ) { 
+                    alert( "Play Video Error : \r\n" + error ); 
+                }
+            
+                function error4 ( error ) { 
+                    alert( "Pause Video Error : \r\n" + error ); 
+                }
+                //</video>
+                
+                //--------- end of script plugin-------------------------------
+        </script>
+    </body>
 </html>

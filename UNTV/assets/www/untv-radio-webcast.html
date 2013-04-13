@@ -41,7 +41,7 @@
 
                     <ul id="radio-home-list" class="untv-radio-player-button" data-role="listview">
                         <li>
-                            <a href="#" onclick="getStreaming('radio');" data-ajax="false">
+                            <a href="#" onclick="getstreamdata();" data-ajax="false">
                                 Play
                             </a>
                         </li>
@@ -89,27 +89,66 @@
         </div>
         <script type="text/javascript" src="js/NativeAudioVideoPlayerPlugin.js"></script>
         <script type="text/javascript">
-            app.initialize();
+            
 			
-			//<audio>
-			function getStreaming(media) {
+        </script>
+        <script type="text/javascript">
+            
+            
+            
+            
+            
+            var isoffline = 0;
+            function onLoad() {
+                document.addEventListener("online", onOnline, false);
+                document.addEventListener("deviceready", onDeviceReady, false);
+            }
+            
+            // Cordova is loaded and it is now safe to make calls Cordova methods
+            //
+            function onDeviceReady() {
+                document.addEventListener("offline", onOffline, false);
+            }
+            
+            // Handle the online event
+            //
+            function onOnline() {
+                isoffline = 0;
+            }
+            
+            function onOffline() {
+                isoffline = 1;
+            }
+            
+            function getstreamdata() {
+                
+                if (isoffline == 0) // with internet
+                {
+                    var url = "http://www.untvradio.com/api/get_recent_posts/?callback=?&post_type=android";
                     
-                    var url;
-                    if (media == "untv")
-                    {
-                        url = "http://www.untvweb.com/api/get_recent_posts/?callback=?&post_type=android";
-                    }
-                    else
-                    {
-                        url = "http://www.untvradio.com/api/get_recent_posts/?callback=?&post_type=android";
-                    }
     
                     $.getJSON(url).done(function (response) {
                                         var r = response.posts; //here's your response
-                                        initPluginThroughActivity(r[0].excerpt);
-
+                                        initPlugin(r[0].excerpt);
+                                        
                                         });
-                    }
+                                        
+                    
+                }
+                else {  
+                    //without internet
+                    navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
+                }
+            }
+            
+            
+            
+            // Script from plugin
+            
+            app.initialize();
+			
+			//<audio>
+	          
                     
 			function initPluginThroughActivity( audioPath ) {
 				NativeAudioVideoPlayerPlugin.initAudioPluginThroughActivity(
@@ -133,7 +172,17 @@
 			
 			function controlPlugin( action ) {
 				if ( action == "playAudio" ) {
-					NativeAudioVideoPlayerPlugin.playAudio( successHandler, error3 );
+                                     if (isoffline != 0) // with internet
+                                        {
+                                           //without internet
+                                            navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
+                                        }
+                                        else
+                                            {
+                                                
+                                                NativeAudioVideoPlayerPlugin.playAudio( successHandler, error3 );
+                                            }
+					    
 				}
 				else if ( action == "pauseAudio" ) {
 					NativeAudioVideoPlayerPlugin.pauseAudio( successHandler, error4 );
@@ -169,40 +218,8 @@
 			}
 			
 			//</audio>
-			
-        </script>
-        <script type="text/javascript">
-            var isoffline = 0;
-            function onLoad() {
-                document.addEventListener("online", onOnline, false);
-                document.addEventListener("deviceready", onDeviceReady, false);
-            }
-            
-            // Cordova is loaded and it is now safe to make calls Cordova methods
-            //
-            function onDeviceReady() {
-                document.addEventListener("offline", onOffline, false);
-            }
-            
-            // Handle the online event
-            //
-            function onOnline() {
-                isoffline = 0;
-            }
-            
-            function onOffline() {
-                isoffline = 1;
-            }
-            
-            function getstreamdata() {
-                if (isoffline == 0)
-                {
-                    getStreaming('untv-radio');
-                }
-                else {
-                    //navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
-                }
-            }
+                        //
+            // end of script from plugin
             </script>
     </body>
 </html>

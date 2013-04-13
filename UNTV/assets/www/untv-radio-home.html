@@ -46,7 +46,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="untv-radio-webcast.html" data-ajax="false">
+                            <a href="#" onClick="getstreamdata();" data-ajax="false">
                                 Live Webcast
                             </a>
                         </li>
@@ -110,24 +110,13 @@
             function getstreamdata() {
                 if (isoffline == 0)
                 {
-                    getStreaming('untv-radio');
+                    window.location.href = "untv-radio-webcast.html";
                 }
                 else {
-                    //navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
+                    navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
                 }
             }
             </script>
-                <script type="text/javascript">
-                app.initialize();
-			
-function openAudioPluginPage() {
-    window.location.href = "untv-radio-webcast.html";
-}
-			
-function openVideoPluginPage() {
-    window.location.href = "untv-webcast.html";
-}
-	
-                </script>
+                
     </body>
 </html>

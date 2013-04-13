@@ -77,7 +77,7 @@
         <div id="footer-menu" data-role="navbar" data-iconpos="top" data-theme="a">
             <ul>
                 <li>
-                    <a href="untv-radio-webcast.html" id="icon-radio-webcast" data-icon="custom" data-ajax="false">
+                    <a href="#" onClick="getstreamdata();" id="icon-radio-webcast" data-icon="custom" data-ajax="false">
                     	Webcast
                     </a>
                 </li>
@@ -126,15 +126,15 @@
             
         }
         
-        function getstreamdata() {
-            if (isoffline == 0)
-            {
-                getStreaming('untv-radio');
+       function getstreamdata() {
+                if (isoffline == 0)
+                {
+                    window.location.href = "untv-radio-webcast.html";
+                }
+                else {
+                    navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
+                }
             }
-            else {
-                navigator.notification.alert('This media require internet connection.', null, "UNTV News", "Ok")
-            }
-        }
 
    </script>
 </body>
